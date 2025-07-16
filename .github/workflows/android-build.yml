@@ -1,0 +1,56 @@
+name: Build SuperTuxKart Android APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y \
+          autoconf automake make python3 python3-pip gradle imagemagick cmake \
+          vorbis-tools pngquant advancecomp libjpeg-progs optipng ninja-build \
+          curl unzip
+
+    - name: Set up Android SDK and NDK
+      uses: android-actions/setup-android@v2
+      with:
+        ndk-version: '23.1.7779620'
+        sdk-platform: 'android-30'
+
+    - name: Set environment variables
+      run: |
+        echo "SDK_PATH=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+        echo "NDK_PATH=$ANDROID_NDK_ROOT" >> $GITHUB_ENV
+        echo "BUILD_TYPE=release" >> $GITHUB_ENV
+        echo "PROJECT_VERSION=git" >> $GITHUB_ENV
+        echo "PROJECT_CODE=42" >> $GITHUB_ENV
+        echo "COMPILE_ARCH=armv7" >> $GITHUB_ENV
+
+    - name: Generate game assets
+      run: |
+        chmod +x generate_assets.sh
+        ./generate_assets.sh
+
+    - name: Build dependencies
+      run: |
+        chmod +x make_deps.sh
+        ./make_deps.sh
+
+    - name: Build APK
+      run: |
+        chmod +x make.sh
+        ./make.sh -j4
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: SuperTuxKart-Android-APK
+        path: android/bin/*.apk
