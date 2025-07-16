@@ -201,6 +201,16 @@ void Kart::init(RaceManager::KartType type)
     loadData(type, UserConfigParams::m_animated_characters);
     // m_skid_sound is loaded in loadData
     initSound();
+   if (getIdent() == "cheat")
+{
+    m_kart_properties->overridePower(250.0f);
+    m_kart_properties->overrideMass(5.0f);
+    m_kart_properties->overrideMaxSpeed(500.0f);
+    m_kart_properties->overrideNitroConsumption(0.0f);
+    m_kart_properties->overrideGearPowerIncrease({10.0f, 10.0f, 10.0f});
+    m_collected_energy = 9999.0f;
+}
+
     reset();
 }   // init
 
