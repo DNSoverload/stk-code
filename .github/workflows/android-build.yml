@@ -33,6 +33,13 @@ jobs:
         echo "PROJECT_VERSION=git" >> $GITHUB_ENV
         echo "PROJECT_CODE=42" >> $GITHUB_ENV
         echo "COMPILE_ARCH=armv7" >> $GITHUB_ENV
+    - name: Download Android dependencies
+      run: |
+          curl -LO https://github.com/supertuxkart/dependencies/releases/download/preview/dependencies-android-src.tar.xz
+          mkdir -p android/lib
+          tar -xf dependencies-android-src.tar.xz -C android/lib
+          export ASSETS_PATHS_DEFAULT="../lib/data ../lib/stk-assets ../lib/supertuxkart-assets"
+
     - name: Generate assets
       run: |
         chmod +x android/generate_assets.sh
