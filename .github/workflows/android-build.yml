@@ -33,21 +33,21 @@ jobs:
         echo "PROJECT_VERSION=git" >> $GITHUB_ENV
         echo "PROJECT_CODE=42" >> $GITHUB_ENV
         echo "COMPILE_ARCH=armv7" >> $GITHUB_ENV
-
-    - name: Generate game assets
+    - name: Generate assets
       run: |
-        chmod +x generate_assets.sh
-        ./generate_assets.sh
+        chmod +x android/generate_assets.sh
+        ./android/generate_assets.sh
 
     - name: Build dependencies
       run: |
-        chmod +x make_deps.sh
-        ./make_deps.sh
+        chmod +x android/make_deps.sh
+        ./android/make_deps.sh
 
     - name: Build APK
       run: |
-        chmod +x make.sh
-        ./make.sh -j4
+        chmod +x android/make.sh
+        ./android/make.sh -j$(nproc)
+
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
