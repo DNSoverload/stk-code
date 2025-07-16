@@ -2,7 +2,8 @@ workflows:
   build_stk_cheat:
     name: Build SuperTuxKart Cheater APK
     environment:
-      instance_type: linux_x2  # Use a Linux runner instead of Mac
+      groups:
+        - linux
       vars:
         SDK_PATH: $CM_ANDROID_SDK
         NDK_PATH: $CM_ANDROID_NDK
