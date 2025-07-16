@@ -3491,5 +3491,30 @@ bool Kart::isVisible() const
 {
     return m_node && m_node->isVisible();
 } // isVisible
+// Methods for cheats
+void KartProperties::overridePower(float p)
+{
+    m_characteristic->setEnginePower(p);
+}
+
+void KartProperties::overrideMass(float m)
+{
+    m_characteristic->setMass(m);
+}
+
+void KartProperties::overrideMaxSpeed(float s)
+{
+    m_characteristic->setEngineMaxSpeed(s);
+}
+
+void KartProperties::overrideNitroConsumption(float n)
+{
+    m_characteristic->setNitroConsumption(n);
+}
+
+void KartProperties::overrideGearPowerIncrease(const std::vector<float>& g)
+{
+    m_characteristic->setGearPowerIncrease(g);
+}
 
 /* EOF */
