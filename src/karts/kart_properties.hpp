@@ -180,6 +180,12 @@ public:
      *  off-track (and a wrong driveline is selected). */
     enum TerrainImpulseType {IMPULSE_NONE, IMPULSE_NORMAL,
                              IMPULSE_TO_DRIVELINE};
+    void overridePower(float p);
+    void overrideMass(float m);
+    void overrideMaxSpeed(float s);
+    void overrideNitroConsumption(float n);
+    void overrideGearPowerIncrease(const std::vector<float>& g);
+
 private:
     TerrainImpulseType m_terrain_impulse_type;
 
